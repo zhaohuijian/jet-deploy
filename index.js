@@ -160,7 +160,6 @@ function sftpUpload(uploadFiles) {
   }));
 
   const uploadPath = path.resolve(process.cwd(), program.args[0] || '');
-  console.log(uploadPath)
 
   if (!fs.existsSync(uploadPath)) return console.log(chalk.red('\n请确认你上传的目录路径是否正确\n'));
 
