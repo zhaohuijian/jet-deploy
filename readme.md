@@ -30,6 +30,9 @@ Options:
 #### 基本功能
 
 ```bash
+# 将当前目录下的所有文件上传到远程服务器
+jet-deploy
+
 # 将当前目录下的 dist 目录中的所有文件上传到远程服务器
 jet-deploy dist
 
