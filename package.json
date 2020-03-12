@@ -1,0 +1,32 @@
+{
+  "name": "jet-deploy",
+  "version": "1.0.0",
+  "description": "应用文件远端部署工具",
+  "main": "index.js",
+  "bin": {
+    "jet-deploy": "./bin/jet-deploy.js"
+  },
+  "author": "chanjet-fe",
+  "license": "MIT",
+  "repository": "chanjet-fe/jet-deploy",
+  "engines": {
+    "node": ">=8.10"
+  },
+  "keywords": [
+    "deploy",
+    "前端工程",
+    "前端部署",
+    "sftp"
+  ],
+  "dependencies": {
+    "boxen": "^4.2.0",
+    "chalk": "^3.0.0",
+    "commander": "^4.0.1",
+    "cross-spawn": "^7.0.1",
+    "inquirer": "^7.1.0",
+    "lodash.merge": "^4.6.2",
+    "ssh2": "^0.8.8",
+    "through2": "^3.0.1",
+    "vinyl-fs": "^3.0.3"
+  }
+}
