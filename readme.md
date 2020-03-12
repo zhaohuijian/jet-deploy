@@ -1,4 +1,4 @@
-<a href="https://www.npmjs.com/package/jet-deploy"><img src="https://img.shields.io/npm/v/jet-deploy.svg" alt="npm-version"></a> <img src="https://img.shields.io/npm/dm/jet-deploy.svg" alt="download-num"> <img src="https://img.shields.io/badge/node-%3E=8.16.0-brightgreen.svg" alt="node"> <img src="https://img.shields.io/npm/l/jet-deploy.svg" alt="license"> <img src="https://img.shields.io/badge/platform-MacOS%7CLinux%7CWindows-lightgrey.svg" alt="platform">
+<a href="https://www.npmjs.com/package/jet-deploy"><img src="https://img.shields.io/npm/v/jet-deploy.svg" alt="npm-version"></a> <img src="https://img.shields.io/npm/dm/jet-deploy.svg" alt="download-num"> <img src="https://img.shields.io/badge/node-%3E=8.10.0-brightgreen.svg" alt="node"> <img src="https://img.shields.io/npm/l/jet-deploy.svg" alt="license"> <img src="https://img.shields.io/badge/platform-MacOS%7CLinux%7CWindows-lightgrey.svg" alt="platform">
 
 # Jet-Deploy
 
