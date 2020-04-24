@@ -69,6 +69,23 @@ const uploader = (sftp, deployConfig) => {
   })
 }
 
+function vfsStart(sftp, deployConfig, uploadFiles) {
+  return new Promise((resolve, reject) => {
+    vfs.src(uploadFiles)
+      .pipe(uploader(sftp, deployConfig))
+      .on('data', function (data) {
+        // console.log(data)
+      })
+      .on('error', function (err) {
+        console.log(orr)
+        reject()
+      })
+      .on('end', function () {
+        resolve()
+      })
+  })
+}
+
 function sftpUpload(uploadFiles) {
   inquirer.prompt([{
     type: 'input',
@@ -114,31 +131,14 @@ function sftpUpload(uploadFiles) {
       }).on('ready', function () {
         conn.sftp(function (err, sftp) {
           if (!err) {
-            sftp.stat(deployConfig.remotePath, function (err, stats) {
+            sftp.stat(deployConfig.remotePath, async function (err, stats) {
               if (stats && stats.isDirectory()) {
-                vfs.src(uploadFiles.static)
-                  .pipe(uploader(sftp, deployConfig))
-                  // .on('data', function (data) {
-                  //   // console.log(data)
-                  // })
-                  .on('end', function () {
-                    if (deployConfig.includeHtml) {
-                      vfs.src(uploadFiles.html)
-                        .pipe(uploader(sftp, deployConfig))
-                        // .on('data', function (data) {
-                        //   // console.log(data)
-                        // })
-                        .on('end', function () {
-                          conn.end()
-                          // conn.close()
-                          console.log(chalk.magenta('deploy succeed.'))
-                        })
-                    } else {
-                      conn.end()
-                      // conn.close()
-                      console.log(chalk.magenta('deploy succeed.'))
-                    }
-                  })
+                await vfsStart(sftp, deployConfig, uploadFiles.static);
+                deployConfig.includeHtml && await vfsStart(sftp, deployConfig, uploadFiles.html);
+
+                conn.end()
+                // conn.close()
+                console.log(chalk.magenta('deploy succeed.'))
               } else {
                 console.log(chalk.red(`上传目录不存在`))
                 console.log(chalk.red(`请在服务器上先创建目录：${deployConfig.remotePath}`))
