@@ -116,15 +116,28 @@ function sftpUpload(uploadFiles) {
           if (!err) {
             sftp.stat(deployConfig.remotePath, function (err, stats) {
               if (stats && stats.isDirectory()) {
-                vfs.src(uploadFiles)
+                vfs.src(uploadFiles.static)
                   .pipe(uploader(sftp, deployConfig))
-                  .on('data', function (data) {
-                    // console.log(data)
-                  })
+                  // .on('data', function (data) {
+                  //   // console.log(data)
+                  // })
                   .on('end', function () {
-                    conn.end()
-                    // conn.close()
-                    console.log(chalk.magenta('deploy succeed.'))
+                    if (deployConfig.includeHtml) {
+                      vfs.src(uploadFiles.html)
+                        .pipe(uploader(sftp, deployConfig))
+                        // .on('data', function (data) {
+                        //   // console.log(data)
+                        // })
+                        .on('end', function () {
+                          conn.end()
+                          // conn.close()
+                          console.log(chalk.magenta('deploy succeed.'))
+                        })
+                    } else {
+                      conn.end()
+                      // conn.close()
+                      console.log(chalk.magenta('deploy succeed.'))
+                    }
                   })
               } else {
                 console.log(chalk.red(`上传目录不存在`))
@@ -163,7 +176,10 @@ function sftpUpload(uploadFiles) {
 
   if (!fs.existsSync(uploadPath)) return console.log(chalk.red('\n请确认你上传的目录路径是否正确\n'));
 
-  const uploadFiles = deployConfig.includeHtml ? path.join(uploadPath, '/**/*') : [path.join(uploadPath, '/**/*'), `!${path.join(uploadPath, '/**/*.html')}`]
-
+  // const uploadFiles = deployConfig.includeHtml ? path.join(uploadPath, '/**/*') : [path.join(uploadPath, '/**/*'), `!${path.join(uploadPath, '/**/*.html')}`]
+  const uploadFiles = {
+    static: [path.join(uploadPath, '/**/*'), `!${path.join(uploadPath, '/**/*.html')}`],
+    html: [`${path.join(uploadPath, '/**/*.html')}`]
+  }
   sftpUpload(uploadFiles)
 })()
